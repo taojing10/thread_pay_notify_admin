@@ -1,0 +1,53 @@
+<!--{template common/header_ajax}-->
+
+<script type="text/javascript">
+	function bangMoney(jjMoney){
+		var userExtcredit = {$userCredit};
+		var sumbitBut = document.getElementById('jjSubmit');
+		
+		if(jjMoney > userExtcredit){
+			sumbitBut.className = 'bluebut';
+			sumbitBut.value = '点击充值';
+            sumbitBut.setAttribute('onclick' , 'window.open(\'{$pvars['recharge_url']}\');return false;');
+		}else{
+			sumbitBut.className = 'orangebut';
+			sumbitBut.value = '完成推广';			
+			sumbitBut.disabled = false;
+            sumbitBut.setAttribute('onclick' , '');
+		}
+	}
+	
+	function tgto(){
+		var url = 'plugin.php?id={$ident}:ajax&formhash={FORMHASH}&act=tg&thread={$tid}&tgto=1';
+		var pay = $('tg_pay').value;
+			
+			url += '&tg_pay=' + pay;
+			
+		ajaxget(url, 'ajaxwaitid', 'ajaxwaitid');
+		
+		return false;
+	}
+</script>
+
+<div class="ajax_window_box">
+	<p>
+		推广金额： 
+		<select id="tg_pay">
+			<!--{loop $credit_options $option}-->
+			<option value="{$option}">{$option} {$creditName}</option>
+			<!--{/loop}-->
+		</select>
+	</p>
+	<hr>
+	<p class="buy_money_cont rq">
+	   {$pvars['describe']}
+	</p>
+	
+	<hr>
+	
+	<p>
+		<input type="submit" class="orangebut" id="jjSubmit" onclick="tgto()" value="完成推广">
+		<input type="button" class="graybut" value="取消推广" onclick="hideWindow('tgWin');">
+	</p>
+</div>
+<!--{template common/footer_ajax}-->

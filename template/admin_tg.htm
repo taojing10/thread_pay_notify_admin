@@ -1,0 +1,51 @@
+<form method="post" action="">
+  <table class="tb">
+    <tbody>
+      <tr class="hover">
+        <td width="40">用户名</td>
+        <td width="100"><input type="text" name="username" value="{$username}" class="txt"></td>
+        <td><input type="submit" name="srchbtn" class="btn" value="搜索"></td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
+<table class="dt mtm">
+	<tbody>
+		<tr>
+			<th>帖子标题</th>
+			<th width="60px">推广费用</th>
+			<th width="130px">推广时间</th>
+			<th width="70px">作者</th>
+			<th width="50">操作</th>
+		</tr>
+		<!--{loop $tgList $tg}-->
+		<tr id="data_{$tg['tgid']}">
+			<td>
+				<a href="forum.php?mod=viewthread&tid={$tg['tid']}" target="_blank">{$tg['subject']}</a>
+			</td>
+			<td>{$tg['pay']}</td>
+			<td>{date($tg['dateline'])}</td>
+			<td><a href="home.php?mod=space&uid={$tg['authorid']}" target="_blank">{$tg['author']}</a></td>
+			<td>
+				<a href="javascript:;'" onclick="tgD({$tg['tgid']});">删除</a>
+			</td>
+		</tr>
+		<!--{/loop}-->		
+	</tbody>
+</table>
+<!--{if $multipage}--> 
+<div class="mtw">
+	{$multipage}
+</div>
+<!--{/if}-->
+
+<script type="text/javascript">
+    function tgD(tg_id) {
+		if (confirm("确认操作嘛")) {
+			var url = '{$mpurl}&formhash={FORMHASH}&act=tgdel&tg=' + tg_id;
+			ajaxget(url , 'data_' + tg_id , 'data_' + tg_id  , 'data_' + tg_id );
+		}
+    }
+	
+</script>
